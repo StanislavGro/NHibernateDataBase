@@ -18,7 +18,7 @@ public class AuditoryDAO implements DAOInterface<Auditory> {
 
     @Override
     public List<Auditory> findAll() {
-        List<Auditory> Auditors = (List<Auditory>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From auditory_table").list();
+        List<Auditory> Auditors = (List<Auditory>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Auditory").list();
         return Auditors;
     }
 

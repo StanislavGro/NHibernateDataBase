@@ -1,8 +1,10 @@
 package com.dataBase.connector;
 
+import com.dataBase.entity.Day;
 import com.dataBase.hibernate.businessLogic.Services;
 import com.dataBase.entity.Auditory;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -53,14 +55,15 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите номер аудитории: ");
-        String number = scanner.nextLine();
+//        System.out.print("Введите номер аудитории: ");
+//        String number = scanner.nextLine();
 
         Services services = new Services();
 
-        Auditory auditory = new Auditory("1000");
+        Auditory auditory = new Auditory("777");
 
-        services.saveAuditory(auditory);
+        //services.saveAuditory(auditory);
+
 
     }
 

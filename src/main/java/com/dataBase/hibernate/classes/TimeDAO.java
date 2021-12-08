@@ -1,6 +1,7 @@
 package com.dataBase.hibernate.classes;
 
 import com.dataBase.entity.Group;
+import com.dataBase.entity.Time;
 import com.dataBase.hibernate.HibernateSessionFactoryUtil;
 import com.dataBase.hibernate.interfaces.DAOInterface;
 import org.hibernate.Session;
@@ -8,44 +9,43 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class GroupDAO implements DAOInterface<Group> {
+public class TimeDAO implements DAOInterface<Time> {
 
     @Override
-    public Group findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Group.class, id);
+    public Time findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Time.class, id);
     }
 
     @Override
-    public List<Group> findAll() {
-        List<Group> Groups = (List<Group>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Group").list();
-        return Groups;
+    public List<Time> findAll() {
+        List<Time> Times = (List<Time>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Time").list();
+        return Times;
     }
 
     @Override
-    public void delete(Group group) {
+    public void delete(Time time) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(group);
+        session.delete(time);
         tx1.commit();
         session.close();
     }
 
     @Override
-    public void update(Group group) {
+    public void update(Time time) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(group);
+        session.update(time);
         tx1.commit();
         session.close();
     }
 
     @Override
-    public void save(Group group) {
+    public void save(Time time) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(group);
+        session.save(time);
         tx1.commit();
         session.close();
     }
-
 }
