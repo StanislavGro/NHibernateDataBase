@@ -2,17 +2,18 @@ package com.dataBase.hibernate.classes;
 
 import com.dataBase.entity.Auditory;
 import com.dataBase.hibernate.HibernateSessionFactoryUtil;
-import com.dataBase.hibernate.interfaces.DAOInterface;
+import com.dataBase.hibernate.interfaces.DAOImpl;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class AuditoryDAO implements DAOInterface<Auditory> {
+public class AuditoryDAO implements DAOImpl<Auditory> {
 
 
     @Override
-    public Auditory findById(int id) {
+    public Auditory findById(long id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Auditory.class, id);
     }
 
@@ -35,7 +36,35 @@ public class AuditoryDAO implements DAOInterface<Auditory> {
     public void update(Auditory auditory) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(auditory);
+        Query query = session.createQuery(
+                "select a.id from Auditory as a ");
+
+        List<Long> idAuditory = query.list();
+
+        if(idAuditory.size()!=0){
+            auditory.setId(idAuditory.get((int)auditory.getId()-1));
+            session.update(auditory);
+        }else {
+            System.out.println("Такой аудитории нет!");
+        }
+        tx1.commit();
+        session.close();
+    }
+
+    public void update(Auditory auditoryBefore, Auditory auditoryAfter) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        Query query = session.createQuery(
+                "select a.id from Auditory as a where a.auditory = '" + auditoryBefore.getAuditory() + "'");
+
+        List<Long> idAuditory = query.list();
+
+        if(idAuditory.size()!=0){
+            auditoryAfter.setId(idAuditory.get(0));
+            session.update(auditoryAfter);
+        }else {
+            System.out.println("Такой аудитории нет!");
+        }
         tx1.commit();
         session.close();
     }

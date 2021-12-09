@@ -8,10 +8,10 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/mydbase?useSSL=false</property>
         <property name="hibernate.connection.username">stanis</property>
         <property name="hibernate.connection.password">130263</property>
-        <property name="show_sql">true</property>
+        <!--<property name="show_sql">true</property>-->
         <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
         <property name="hibernate.connection.characterEncoding">utf-8</property>
-        <property name="hibernate.format_sql">true</property>
-        <property name="default_schema">mydbase</property>
+        <!--<property name="hibernate.format_sql">true</property>-->
+        <!-- <property name="default_schema">mydbase</property> -->
     </session-factory>
 </hibernate-configuration>

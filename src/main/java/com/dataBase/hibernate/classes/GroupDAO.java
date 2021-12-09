@@ -2,16 +2,17 @@ package com.dataBase.hibernate.classes;
 
 import com.dataBase.entity.Group;
 import com.dataBase.hibernate.HibernateSessionFactoryUtil;
-import com.dataBase.hibernate.interfaces.DAOInterface;
+import com.dataBase.hibernate.interfaces.DAOImpl;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class GroupDAO implements DAOInterface<Group> {
+public class GroupDAO implements DAOImpl<Group> {
 
     @Override
-    public Group findById(int id) {
+    public Group findById(long id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Group.class, id);
     }
 
@@ -34,7 +35,35 @@ public class GroupDAO implements DAOInterface<Group> {
     public void update(Group group) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(group);
+        Query query = session.createQuery(
+                "select g.id from Group as g ");
+
+        List<Long> idGroup = query.list();
+
+        if(idGroup.size()!=0){
+            group.setId(idGroup.get((int)group.getId()-1));
+            session.update(group);
+        }else {
+            System.out.println("Такой группы нет!");
+        }
+        tx1.commit();
+        session.close();
+    }
+
+    public void update(Group groupBefore, Group groupAfter) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        Query query = session.createQuery(
+                "select g.id from Group as g where g.group = '" + groupBefore.getGroup() + "'");
+
+        List<Long> idGroup = query.list();
+
+        if(idGroup.size()!=0){
+            groupAfter.setId(idGroup.get(0));
+            session.update(groupAfter);
+        }else {
+            System.out.println("Такой группы нет!");
+        }
         tx1.commit();
         session.close();
     }

@@ -1,29 +1,52 @@
 package com.dataBase.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "groupp_table")
-public class Group {
+public class Group implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
+
+    @Column(name = "groupp")
     private String group;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Schedule> scheduleList;
 
     public Group(){}
 
-    public Group(String group){
-        this.group = group;
-    }
-
-    public Group(int id, String group){
+    public Group(long id, String group){
         this.id = id;
         this.group = group;
+        scheduleList = new ArrayList<>();
     }
 
-    public int getId() {
+    public Group(String group){
+        this.group = group;
+        scheduleList = new ArrayList<>();
+    }
+
+    public void addSchedule(Schedule schedule){
+        schedule.setGroup(this);
+        scheduleList.add(schedule);
+    }
+
+    public void removeSchedule(Schedule schedule){
+        scheduleList.remove(schedule);
+    }
+
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getGroup() {
@@ -33,7 +56,6 @@ public class Group {
     public void setGroup(String group) {
         this.group = group;
     }
-
 
     @Override
     public String toString() {

@@ -26,7 +26,6 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1">
-        <schema name="pg_catalog" object-types="table, view, sequence, function" />
         <schema name="public" object-types="table, view, sequence, function, constraint, index, column, dataset trigger" />
       </connection>
     </loaded-nodes>
@@ -37,17 +36,29 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" object-ref="schemas/public/tables/auditory_table" />
+      <object connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" object-ref="schemas/public/tables/groupp_table" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="8a8e0500-41f0-483f-959b-0ac243379ea1" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" dataset="public.schedule" active-filter-id="c7a3e9ab-acb7-4c84-bec7-5bf37b4a7fbb">
+      <filter id="c7a3e9ab-acb7-4c84-bec7-5bf37b4a7fbb" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
     <filter-actions connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" dataset="public.auditory_table" active-filter-id="282f88c9-64c6-4ff2-87a5-a504b3615ca8">
       <filter id="282f88c9-64c6-4ff2-87a5-a504b3615ca8" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
     </filter-actions>
     <filter-actions connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" dataset="public.day_table" active-filter-id="3405d3ff-1471-41a2-93c2-0ec06faae26e">
       <filter id="3405d3ff-1471-41a2-93c2-0ec06faae26e" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
+    <filter-actions connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" dataset="public.groupp_table" active-filter-id="e2bc5d45-4695-44af-a26e-7e1b8587e97d">
+      <filter id="e2bc5d45-4695-44af-a26e-7e1b8587e97d" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
+    <filter-actions connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" dataset="public.time_table" active-filter-id="a8e8842d-4f36-4bf3-96b0-4038193a8eed">
+      <filter id="a8e8842d-4f36-4bf3-96b0-4038193a8eed" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
     </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">

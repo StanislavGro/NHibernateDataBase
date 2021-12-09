@@ -2,9 +2,9 @@ package com.dataBase.hibernate.interfaces;
 
 import java.util.List;
 
-public interface DAOInterface<Type> {
+public interface DAOImpl<Type> {
 
-    Type findById(int id);
+    Type findById(long id);
     List<Type> findAll();
     void delete(Type object);
     void update(Type object);
