@@ -72,7 +72,17 @@ public class GroupDAO implements DAOImpl<Group> {
     public void save(Group group) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(group);
+
+        Query query = session.createQuery(
+                "select g.id from Group as g where g.group = '" + group.getGroup() + "'");
+
+        List<Long> idGroup = query.list();
+
+        if(idGroup.size()==0){
+            session.save(group);
+        }else {
+            System.out.println("Ошибка! Такая группа уже есть!!");
+        }
         tx1.commit();
         session.close();
     }

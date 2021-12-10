@@ -388,7 +388,6 @@ public class ScheduleDAO implements DAOImpl<Schedule> {
                 schedule.getGroup().setId(idGroup.get(0));
             }
 
-            //schedule.setAuditory(auditory);
             session.update(schedule);
         }else {
             System.out.println("Таблица расписаний пуста!");
@@ -404,51 +403,73 @@ public class ScheduleDAO implements DAOImpl<Schedule> {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
 
-        Query query = session.createQuery("select a.id " +
-                "from Auditory as a " +
-                "where a.auditory = '" + schedule.getAuditory().getAuditory() +"'");
-
-        List<Long> idAuditory = query.list();
-
-        query = session.createQuery("select g.id " +
-                "from Group as g where g.group = '" + schedule.getGroup().getGroup()+"'");
-
-        List<Long> idGroup = query.list();
-
-        if(idAuditory.size()==0){
-            ServicesAuditory servicesAuditory = new ServicesAuditory();
-            servicesAuditory.save(schedule.getAuditory());
-        }else {
-            schedule.getAuditory().setId(idAuditory.get(0));
-        }
-
-        if(idGroup.size()==0){
-            ServicesGroup servicesGroup = new ServicesGroup();
-            servicesGroup.save(schedule.getGroup());
-        }else {
-            schedule.getGroup().setId(idGroup.get(0));
-        }
-
-        query = session.createQuery(
-                "select sc.week, d.day, ti.timeStart, ti.timeEnd, gr.group, au.auditory " +
+        Query query = session.createQuery(
+                "select sc.week, d.day, ti.timeStart, ti.timeEnd, au.auditory " +
                         "from Schedule as sc " +
                         "join Day as d on d.id = sc.day " +
                         "join Time as ti on ti.id = sc.time " +
-                        "join Group as gr on gr.id = sc.group " +
                         "join Auditory as au on au.id = sc.auditory " +
                         "where sc.week = " + schedule.getWeek() + " and " +
                         "d.day = '" + schedule.getDay().getDay() + "' and " +
                         "ti.timeStart = '" + schedule.getTime().getTimeStart() + "' and " +
                         "ti.timeEnd = '" + schedule.getTime().getTimeEnd() + "' and " +
-                        "gr.group = '" + schedule.getGroup().getGroup() + "' and " +
                         "au.auditory = '" + schedule.getAuditory().getAuditory() + "'");
 
-        List idSchedule = query.list();
+        List<Schedule> idScheduleForCheck = query.list();
 
-        if(idSchedule.size()==0){
-            session.save(schedule);
-        }else {
-            System.out.println("Такое расписание уже есть!");
+        if(idScheduleForCheck.size() == 0) {
+
+
+            query = session.createQuery("select a.id " +
+                    "from Auditory as a " +
+                    "where a.auditory = '" + schedule.getAuditory().getAuditory() + "'");
+
+            List<Long> idAuditory = query.list();
+
+            query = session.createQuery("select g.id " +
+                    "from Group as g where g.group = '" + schedule.getGroup().getGroup() + "'");
+
+            List<Long> idGroup = query.list();
+
+            if (idAuditory.size() == 0) {
+                ServicesAuditory servicesAuditory = new ServicesAuditory();
+                servicesAuditory.save(schedule.getAuditory());
+            } else {
+                schedule.getAuditory().setId(idAuditory.get(0));
+            }
+
+            if (idGroup.size() == 0) {
+                ServicesGroup servicesGroup = new ServicesGroup();
+                servicesGroup.save(schedule.getGroup());
+            } else {
+                schedule.getGroup().setId(idGroup.get(0));
+            }
+
+            query = session.createQuery(
+                    "select sc.week, d.day, ti.timeStart, ti.timeEnd, gr.group, au.auditory " +
+                            "from Schedule as sc " +
+                            "join Day as d on d.id = sc.day " +
+                            "join Time as ti on ti.id = sc.time " +
+                            "join Group as gr on gr.id = sc.group " +
+                            "join Auditory as au on au.id = sc.auditory " +
+                            "where sc.week = " + schedule.getWeek() + " and " +
+                            "d.day = '" + schedule.getDay().getDay() + "' and " +
+                            "ti.timeStart = '" + schedule.getTime().getTimeStart() + "' and " +
+                            "ti.timeEnd = '" + schedule.getTime().getTimeEnd() + "' and " +
+                            "gr.group = '" + schedule.getGroup().getGroup() + "' and " +
+                            "au.auditory = '" + schedule.getAuditory().getAuditory() + "'");
+
+            List<Schedule> idSchedule = query.list();
+
+            if (idSchedule.size() == 0) {
+
+                session.save(schedule);
+            } else {
+                System.out.println("Такое расписание уже есть!");
+            }
+        }
+        else {
+            System.out.println("Ошибка! Вы нарушили ограничение уникальности");
         }
 
         tx1.commit();

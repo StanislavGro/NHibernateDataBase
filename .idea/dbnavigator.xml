@@ -36,10 +36,7 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" object-ref="schemas/public/tables/auditory_table" />
-      <object connection-id="8a8e0500-41f0-483f-959b-0ac243379ea1" object-ref="schemas/public/tables/groupp_table" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="8a8e0500-41f0-483f-959b-0ac243379ea1" />

@@ -54,6 +54,7 @@ public class AuditoryDAO implements DAOImpl<Auditory> {
     public void update(Auditory auditoryBefore, Auditory auditoryAfter) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
+
         Query query = session.createQuery(
                 "select a.id from Auditory as a where a.auditory = '" + auditoryBefore.getAuditory() + "'");
 
@@ -73,7 +74,18 @@ public class AuditoryDAO implements DAOImpl<Auditory> {
     public void save(Auditory auditory) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(auditory);
+
+        Query query = session.createQuery(
+                "select au.auditory from Auditory as au where au.auditory = '" + auditory.getAuditory() + "'");
+
+        List<Auditory> auditoryForCheck = query.list();
+
+        if (auditoryForCheck.size() == 0) {
+            session.save(auditory);
+        }
+        else {
+            System.out.println("Ошибка!! Такая ау2дитория уже есть!");
+        }
         tx1.commit();
         session.close();
     }
